@@ -1,0 +1,636 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap');
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7f6;
+  color: #333;
+}
+
+header {
+  background-color: #007b5e; /* Warna hijau identik Islami */
+  color: white;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.surat-container {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 600px;
+  margin: 0 auto; /* Posisi di tengah jika dibuka di laptop */
+}
+
+.surat-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.surat-info h2 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.surat-info p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.surat-arab {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: right;
+  color: #007b5e;
+}
+.font-arab {
+  font-family: 'Amiri Quran', serif;
+  font-size: 2.5rem; /* Ukuran huruf diperbesar agar lebih jelas */
+  line-height: 2.5; /* Jarak antar baris diperlebar agar harakat tidak menabrak */
+  text-align: right;
+  color: #111;
+}
+/* --- DESAIN TOMBOL KEMBALI (POJOK KANAN ATAS) --- */
+.btn-kembali {
+  position: absolute;
+  top: 0;
+  right: 0; /* Menggeser posisi ke pojok kanan */
+  background-color: rgba(255, 255, 255, 0.2); /* Efek transparan */
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px; /* Bentuk tombol kapsul */
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Garis tepi tipis bersinar */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease; /* Animasi mulus */
+}
+
+/* Efek ketika tombol disentuh / diklik */
+.btn-kembali:hover,
+.btn-kembali:active {
+  background-color: white;
+  color: #007b5e; /* Tulisan berubah hijau menyesuaikan tema */
+}
+/* --- DESAIN MENU PILIHAN --- */
+.menu-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 15px;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky; /* Membuat menu tetap di atas saat di-scroll */
+  top: 0;
+  z-index: 100;
+}
+/* Memastikan ukuran tombol sedikit menyesuaikan di layar HP */
+@media (max-width: 480px) {
+  .menu-container button {
+    flex: 1 1 auto; /* Membuat tombol sedikit memanjang mengisi ruang kosong jika diperlukan */
+    font-size: 0.9rem; /* Mengecilkan teks sedikit agar lebih pas */
+  }
+}
+.btn-menu {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 25px;
+  background-color: #f4f7f6;
+  color: #555;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+/* Efek saat tombol disentuh */
+.btn-menu:hover {
+  background-color: #e8f5e9;
+  color: #007b5e;
+}
+
+/* Efek untuk tombol yang sedang aktif/terpilih */
+.btn-menu.aktif {
+  background-color: #007b5e;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 123, 94, 0.3);
+}
+
+/* Animasi halus saat berganti menu */
+.konten-menu {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* --- TEMA MODE GELAP (DARK MODE) --- */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode header {
+  background-color: #1f1f1f;
+}
+
+body.dark-mode .surat-card,
+body.dark-mode .menu-container {
+  background-color: #1e1e1e !important;
+  color: #e0e0e0 !important;
+  border-color: #333 !important;
+}
+
+body.dark-mode .surat-card h2,
+body.dark-mode .surat-card div {
+  color: #e0e0e0 !important;
+}
+
+body.dark-mode .surat-arab {
+  color: #4db6ac !important; /* Warna hijau terang agar kontras di latar gelap */
+}
+
+body.dark-mode input[type='text'] {
+  background-color: #2d2d2d;
+  color: white;
+  border-color: #444;
+}
+/* --- PENGATURAN RESPONSIF HEADER (TOMBOL ATAS) --- */
+.header-top {
+  display: flex;
+  justify-content: center; /* Default di HP: Rata tengah */
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Jika dibuka di layar komputer/laptop (lebar di atas 768px) */
+@media (min-width: 768px) {
+  .header-top {
+    justify-content: flex-start; /* Berubah jadi rata kiri */
+  }
+}
+/* --- POSISI TOMBOL TEMA RESPONSIF DI HALAMAN UTAMA --- */
+.posisi-tema {
+  text-align: center; /* Default untuk Layar HP: Posisi di Tengah */
+  margin-bottom: 10px;
+}
+
+/* Jika dibuka di komputer/laptop (lebar layar di atas 768px) */
+@media (min-width: 768px) {
+  .posisi-tema {
+    text-align: left; /* Otomatis bergeser ke kiri */
+  }
+}
+/* --- WIDGET JADWAL SHOLAT --- */
+.waktu-item {
+  flex: 1;
+  min-width: 50px;
+  background: #f4fcf9;
+  padding: 8px 2px;
+  border-radius: 8px;
+  border: 1px solid #e0f2eb;
+}
+/* ==================================================
+   EFEK DARK MODE UNTUK WIDGET JADWAL SHOLAT 
+================================================== */
+
+/* 1. Mengubah latar belakang kotak utama menjadi gelap */
+body.dark-mode .jadwal-card {
+  background-color: #2f3032 !important; /* Warna gelap khas */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5) !important; /* Bayangan lebih pekat */
+}
+
+/* 2. Menyesuaikan teks tanggal dan lokasi agar lebih terang */
+body.dark-mode #lokasi-sholat,
+body.dark-mode #tanggal-sholat {
+  color: #e2e8f0 !important;
+}
+
+/* 3. Mengubah warna kotak-kotak kecil waktu sholat */
+body.dark-mode .waktu-item {
+  background-color: #334155 !important;
+  border-color: #475569 !important;
+}
+
+/* 4. Menyesuaikan teks Subuh, Dhuha, dll agar tidak abu-abu gelap lagi */
+body.dark-mode .waktu-item div:first-child {
+  color: #cbd5e1 !important;
+}
+
+/* 5. Menerangkan warna teks jam (hijau) agar lebih kontras di layar gelap */
+body.dark-mode .waktu-item div:last-child {
+  color: #34d399 !important; /* Hijau pastel menyala */
+}
+
+/* 6. Menyesuaikan tombol Ganti Kota di mode gelap */
+body.dark-mode .jadwal-card button {
+  background-color: #0f172a !important;
+  border-color: #34d399 !important;
+  color: #34d399 !important;
+}
+
+/* ==================================================
+   DARK MODE TAJWID (JUDUL HIJAU, LIST GELAP)
+================================================== */
+
+/* 1. Paksa semua kotak (div) dan tombol di halaman Tajwid jadi gelap dulu */
+body.dark-mode #tajwid div,
+body.dark-mode #tajwid button {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  color: #e0e0e0 !important;
+}
+
+/* 2. KUNCI RAHASIA: Kembalikan HANYA kotak judul (yang punya tag h2) ke warna HIJAU */
+body.dark-mode #tajwid div:has(> h2) {
+  background-color: #007b5e !important;
+  border: none !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* 3. Pastikan teks judul dan deskripsi di kotak hijau tetap putih terang */
+body.dark-mode #tajwid div:has(> h2) h2 {
+  color: white !important;
+}
+body.dark-mode #tajwid div:has(> h2) p {
+  color: #e2dbdb !important;
+}
+
+/* 4. Pastikan teks isi materi (paragraf, ul, li) di dalam list yang gelap tetap terang */
+body.dark-mode #tajwid ul,
+body.dark-mode #tajwid li,
+body.dark-mode #tajwid b,
+body.dark-mode #tajwid span,
+body.dark-mode #tajwid div:not(:has(> h2)) p {
+  color: #e0e0e0 !important;
+}
+
+/* 5. Efek sentuh khusus untuk daftar list materi agar lebih hidup */
+body.dark-mode #tajwid button:hover,
+body.dark-mode #tajwid div:not(:has(> h2)):hover {
+  background-color: #2a2a2a !important;
+}
+/* ==================================================
+   DARK MODE KONTEN DOA HARIAN (DAFTAR LIPAT & PENCARIAN)
+================================================== */
+
+/* 1. Menyamakan latar belakang dan garis tepi item doa dengan list Surah/Tajwid */
+body.dark-mode #doa-list div,
+body.dark-mode #doa-list button {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  color: #e0e0e0 !important;
+}
+
+/* 2. Memaksa isi teks, judul doa, arti, dan tulisan latin menjadi terang */
+body.dark-mode #doa-list p,
+body.dark-mode #doa-list span,
+body.dark-mode #doa-list b,
+body.dark-mode #doa-list i {
+  color: #e0e0e0 !important;
+}
+
+/* 3. Membuat teks Arab di dalam list doa menyala hijau terang (opsional, jika tag Anda spesifik) */
+body.dark-mode #doa-list p[dir='rtl'] {
+  color: #4db6ac !important;
+}
+
+/* 4. Efek hover saat list Doa disentuh/diklik di mode gelap */
+body.dark-mode #doa-list button:hover,
+body.dark-mode #doa-list div:hover {
+  background-color: #2a2a2a !important;
+}
+
+/* 5. Memaksa kotak pencarian (input search) menjadi mode gelap */
+body.dark-mode #cari-doa {
+  background-color: #1e1e1e !important;
+  color: #e0e0e0 !important;
+  border-color: #333 !important;
+}
+
+/* Mengubah warna teks panduan (placeholder) pada kotak pencarian agar lebih redup */
+body.dark-mode #cari-doa::placeholder {
+  color: #888 !important;
+}
+
+/* ==================================================
+   DARK MODE KONTEN ASMAUL HUSNA (TABEL)
+================================================== */
+
+/* 1. Mengubah latar belakang wadah utama tabel menjadi gelap */
+body.dark-mode #asmaul-husna .surat-container {
+  background-color: #1e1e1e !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 2. Memaksa warna seluruh teks dan garis di dalam tabel menjadi terang */
+body.dark-mode #tabel-husna,
+body.dark-mode #tabel-husna th,
+body.dark-mode #tabel-husna td {
+  color: #e0e0e0 !important;
+  border-color: #333 !important;
+  background-color: transparent !important; /* Menghilangkan warna putih bawaan tabel */
+}
+
+/* 3. Menimpa warna inline tulisan Arab (hijau tua) menjadi hijau terang / neon */
+body.dark-mode #tabel-husna .font-arab {
+  color: #4db6ac !important;
+}
+
+/* 4. Memberikan efek sorot (hover) elegan saat baris tabel ditunjuk */
+body.dark-mode #tabel-husna tbody tr:hover td {
+  background-color: #2a2a2a !important;
+}
+
+/* ==================================================
+   TAMBAHAN: JIKA NANTI MENGGUNAKAN PLUGIN DATATABLES
+================================================== */
+body.dark-mode .dataTables_wrapper,
+body.dark-mode .dataTables_info,
+body.dark-mode .dataTables_length,
+body.dark-mode .dataTables_filter {
+  color: #e0e0e0 !important;
+}
+
+body.dark-mode .dataTables_wrapper input,
+body.dark-mode .dataTables_wrapper select {
+  background-color: #1e1e1e !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #444 !important;
+  border-radius: 5px;
+  padding: 5px;
+}
+/* ==================================================
+   MEMBUAT LINGKARAN LOGO GELAP DI DARK MODE
+================================================== */
+
+/* 1. Mengubah lingkaran putih menjadi gelap kebiruan saat Dark Mode */
+body.dark-mode .logo-box {
+  background-color: #0f172a !important;
+  border-color: #34d399 !important;
+  box-shadow: 0 4px 12px #34d399 !important;
+}
+
+/* 2. Mengubah warna gambar logo hijau menjadi PUTIH TERANG agar jelas dibaca */
+/* body.dark-mode .logo-box img {
+  filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(255, 255, 255, 0.2)) !important;
+} */
+/* ==================================================
+   DARK MODE KALENDER HIJRIAH
+================================================== */
+
+/* 1. Mengunci Kotak Judul Utama (Tetap Hijau) */
+body.dark-mode #header-kalender {
+  background-color: #007b5e !important;
+  border: none !important;
+}
+body.dark-mode #header-kalender h2 {
+  color: white !important;
+}
+body.dark-mode #header-kalender p {
+  color: #e2dbdb !important;
+}
+
+/* 2. Menggelapkan Kotak Tanggal Hari Ini */
+body.dark-mode #info-hijriah {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5) !important;
+}
+body.dark-mode #info-hijriah h3 {
+  color: #e0e0e0 !important; /* Abu-abu terang */
+}
+body.dark-mode #info-hijriah h1 {
+  color: #4db6ac !important; /* Teks tanggal jadi hijau neon */
+}
+
+/* 3. Menggelapkan Kotak Daftar 12 Bulan */
+body.dark-mode #list-bulan div {
+  background-color: #1e1e1e !important;
+  border-color: #333 !important;
+  color: #e0e0e0 !important;
+}
+/* ==================================================
+   WARNA KHUSUS IKON LAFAZ ALLAH
+================================================== */
+
+/* 1. Warna hijau pekat saat mode terang (siang) */
+.ikon-allah {
+  color: #e0ca0b;
+  border-color: #333;
+  font-size: 1.2rem; /* Sedikit diperbesar agar presisi dengan teks */
+  font-weight: bold;
+  margin-right: 2px; /* Memberi sedikit jarak dengan huruf A */
+}
+
+/* 2. Warna hijau neon menyala saat mode gelap (Dark Mode) */
+body.dark-mode .ikon-allah {
+  color: #e0ca0b;
+  border-color: #333;
+}
+
+/* ==================================================
+   DESAIN KALENDER INTERAKTIF (ACCORDION & GRID TANGGAL)
+================================================== */
+
+/* Tombol List Bulan */
+.tombol-accordion-bulan {
+  background-color: white;
+  color: #444;
+  cursor: pointer;
+  padding: 15px 20px;
+  width: 100%;
+  text-align: left;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  transition: 0.2s ease;
+}
+.tombol-accordion-bulan:hover {
+  background-color: #f8fafc;
+}
+
+/* Panel Tempat Kalender Muncul */
+.panel-kalender-bulan {
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+.judul-bulan-panel {
+  text-align: center;
+  margin: 0 0 15px 0;
+  font-weight: bold;
+  color: #007b5e;
+  font-size: 1.1rem;
+}
+
+/* Susunan Kotak Tanggal 1-30 */
+.grid-kalender-hijriah {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* Membagi jadi 7 kolom (Senin-Minggu) */
+  gap: 8px;
+}
+.hari-kotak {
+  background-color: #f0fdf4; /* Hijau super muda */
+  color: #007b5e;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: bold;
+  border: 1px solid #bbf7d0;
+}
+
+/* ==================================================
+   PENYESUAIAN UNTUK DARK MODE
+================================================== */
+body.dark-mode .tombol-accordion-bulan {
+  background-color: #1e1e1e !important;
+  color: #e0e0e0 !important;
+  border-color: #333 !important;
+}
+body.dark-mode .tombol-accordion-bulan:hover {
+  background-color: #2a2a2a !important;
+}
+body.dark-mode .panel-kalender-bulan {
+  background-color: #1a1a1a !important;
+  border-color: #333 !important;
+}
+body.dark-mode .judul-bulan-panel {
+  color: #34d399 !important;
+}
+body.dark-mode .hari-kotak {
+  background-color: #2a2a2a !important;
+  color: #34d399 !important;
+  border-color: #444 !important;
+}
+
+/* ==================================================
+   DESAIN GRID KALENDER API (GAYA KEMENAG)
+================================================== */
+
+.hari-header {
+  font-weight: bold;
+  text-align: center;
+  color: #007b5e;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #ddd;
+  font-size: 0.85rem;
+}
+
+.hari-kosong {
+  background-color: transparent;
+  border: none;
+}
+
+.hari-kotak-api {
+  background-color: #f0fdf4;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  border: 1px solid #bbf7d0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.tgl-h {
+  font-size: 1.3rem; /* Angka Hijriah dibuat BESAR */
+  font-weight: bold;
+  color: #007b5e;
+  line-height: 1;
+}
+
+.tgl-m {
+  font-size: 0.65rem; /* Angka Masehi dibuat kecil di bawah */
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Penyesuaian Dark Mode Khusus Grid Baru */
+body.dark-mode .hari-header {
+  color: #34d399 !important;
+  border-bottom-color: #444 !important;
+}
+body.dark-mode .hari-kotak-api {
+  background-color: #222 !important;
+  border-color: #333 !important;
+}
+body.dark-mode .tgl-h {
+  color: #34d399 !important;
+}
+body.dark-mode .tgl-m {
+  color: #94a3b8 !important;
+}
+/* ==================================================
+   WARNA KHUSUS UNTUK TANGGAL HARI INI
+================================================== */
+
+/* Mode Terang: Latar hijau pekat, teks putih */
+.hari-ini-aktif {
+  background-color: #007b5e !important;
+  border-color: #005a45 !important;
+  box-shadow: 0 4px 6px rgba(0, 123, 94, 0.3);
+  transform: scale(1.05); /* Sedikit membesar agar lebih menonjol */
+}
+.hari-ini-aktif .tgl-h,
+.hari-ini-aktif .tgl-m {
+  color: #ffffff !important;
+}
+
+/* ==================================================
+   WARNA KHUSUS UNTUK TANGGAL HARI INI (FIX DARK MODE)
+================================================== */
+
+/* Mode Terang */
+.hari-ini-aktif {
+  background-color: #007b5e !important;
+  border-color: #005a45 !important;
+  box-shadow: 0 4px 6px rgba(0, 123, 94, 0.3) !important;
+  transform: scale(1.05);
+}
+.hari-ini-aktif .tgl-h,
+.hari-ini-aktif .tgl-m {
+  color: #ffffff !important;
+}
+
+/* Mode Gelap (Ditambahkan .hari-kotak-api agar lebih kuat dari CSS bawaan) */
+body.dark-mode .hari-kotak-api.hari-ini-aktif {
+  background-color: #007b5e !important;
+  border-color: #b94e10 !important;
+  box-shadow: 0 4px 6px rgba(52, 211, 153, 0.2) !important;
+}
+/* body.dark-mode .hari-kotak-api.hari-ini-aktif .tgl-h {
+  color: #1a1a1a !important;
+}
+body.dark-mode .hari-kotak-api.hari-ini-aktif .tgl-m {
+  color: #333333 !important;
+} */
