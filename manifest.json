@@ -1,0 +1,17 @@
+{
+  "name": "Tarteel App - Panduan Ibadah",
+  "short_name": "Tarteel",
+  "description": "Teman Belajar Al-Qur'an & Ibadah Harian Siswa",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007b5e",
+  "icons": [
+    {
+      "src": "Tarteel-removebg-preview.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
